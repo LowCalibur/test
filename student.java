@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.lang.*;
 import java.util.Iterator;
+ 
 /**
  * Write a description of class student here.
  *
@@ -9,7 +10,7 @@ import java.util.Iterator;
  */
 public class student implements Comparable<student>
 {
-    // instance variables
+    // Initialize variables
     private int iD;
     private String name;
     private String major;
@@ -102,19 +103,6 @@ public class student implements Comparable<student>
         return "Id: " + iD + " Name: " + name + " Major: " + major;
     }
     
-    public Comparable find(Comparable obj, Node root)
-    {
-      Node current = root;
-      while (current != null)
-      {
-         int d = current.data.compareTo(obj);
-         if (d == 0) { return current; }
-         else if (d > 0) { current = current.left; }
-         else { current = current.right; }
-      }
-      return null;
-    }
-    
     public static void main(String[] args)
     {
         // Initialize variables and id counters
@@ -125,20 +113,20 @@ public class student implements Comparable<student>
         //Initialize tree and add 5 students
         BinarySearchTree tree = new BinarySearchTree();
         student student = new student(id_counter, "Romeo", "adj");
-        id_counter++;
         tree.add(student);
+        id_counter++;
         student = new student(id_counter, "Juliet", "adj");
+        tree.add(student);
         id_counter++;    
-        tree.add(student);
         student = new student(id_counter, "Adam", "dpr");
+        tree.add(student);
         id_counter++;     
-        tree.add(student);
         student = new student(id_counter, "Eve", "csi");
-        id_counter++;
         tree.add(student);
+        id_counter++;
         student = new student(id_counter, "Tom", "spa");
-        id_counter++;
         tree.add(student);
+        id_counter++;
         tree.print();
         
         Scanner in = new Scanner(System.in);
@@ -146,6 +134,7 @@ public class student implements Comparable<student>
         boolean done = false;
         while(!done)
         {
+            boolean search = false;
             // Prints out menu
             System.out.println("");
             System.out.println("A)dd R)emove S)earch P)rint Q)uit");
@@ -182,27 +171,40 @@ public class student implements Comparable<student>
                 tree.remove(student);
                 tree.print();
             }
+            // Search based on input
             else if (input.equals("S"))
             {
-                System.out.println("Search for I)D or search by M)ajor?");
-                input = in.next().toUpperCase();
-                if (input.equals("I"))
+                while (!search)
                 {
-                    Scanner scan = new Scanner(System.in);
-                    System.out.println("Enter student ID");
-                    inID = scan.next();
-                    int check = Integer.parseInt(inID);
-                    student = new student(check);
-                    tree.find(student);
-                }
-                else if (input.equals("M"))
-                {
-                    
-                }
-                else 
-                {
-                    System.out.println("Please enter a valid option: I)d or M)ajor");
-                }
+                    System.out.println("Search for I)D or search by M)ajor?");
+                    input = in.next().toUpperCase();
+                    if (input.equals("I"))
+                    {
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Enter student ID");
+                        inID = scan.next();
+                        int check = Integer.parseInt(inID);
+                        student = new student(check);
+                        if (tree.find(student) != false)
+                        {
+                            tree.print();
+                        }
+                        else
+                        {
+                            System.out.println("There is no student with that ID");
+                        }
+                        search = true;
+                    }
+                    else if (input.equals("M"))
+                    {
+                        search = true;
+                    }
+                    else 
+                    {
+                        input = "S";
+                        System.out.println("Please enter a valid option: I)d or M)ajor");
+                    }
+                }   
             }
             else if (input.equals("P"))
             {

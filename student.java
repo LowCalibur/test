@@ -19,8 +19,7 @@ public class student implements Comparable<student>
     public student()
     {
         this.iD = 0;
-    }
-    
+    }    
     // Default constructor
     public student(int iD, String name, String major)
     {
@@ -28,35 +27,29 @@ public class student implements Comparable<student>
         this.setName(name);
         this.setMajor(major);
     }
-    // Student id constructor
-    
+    // Student id constructor    
     public student(int iD)
     {
         this.iD = iD;
         this.name = null;
         this.major = null;
-    }
-    
+    }    
     public int getiD()
     {
         return iD;
-    }
-    
+    }    
     public String getName()
     {
         return name;
-    }
-    
+    }    
     public String getMajor()
     {
         return major;
-    }
-    
+    }    
     public void setiD(int iD)
     {
         this.iD = iD;
-    }
-    
+    }    
     public void setName(String name)
     {
         this.name = name;
@@ -101,8 +94,7 @@ public class student implements Comparable<student>
     {
         System.out.println();
         return "Id: " + iD + " Name: " + name + " Major: " + major;
-    }
-    
+    }    
     public static void main(String[] args)
     {
         // Initialize variables and id counters
@@ -129,8 +121,7 @@ public class student implements Comparable<student>
         id_counter++;
         tree.print();
         
-        Scanner in = new Scanner(System.in);
-        
+        Scanner in = new Scanner(System.in);        
         boolean done = false;
         while(!done)
         {

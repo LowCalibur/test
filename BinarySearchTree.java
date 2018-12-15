@@ -140,11 +140,14 @@ public class BinarySearchTree
       print(root);
       System.out.println();
    }  
-   // prints current node only
-   public void printNode(Node parent)
+   //searches for major
+   public void printMajor(Comparable obj)
    {
-      System.out.print(parent.data);
-      System.out.println();
+       if (root.data.compareTo(obj) == 0)
+       {
+           System.out.println(root.data);
+       }
+       printMajor(root,obj);
    }
    
    /**
@@ -158,7 +161,23 @@ public class BinarySearchTree
       System.out.print(parent.data + " ");
       print(parent.right);
    }
+   // searches for major
+   private static void printMajor(Node parent, Comparable obj)
+   {  
+      if (parent == null) { return; }
+      printMajor(parent.left, obj);
+      if (parent.data.compareTo(obj) == 0)
+      System.out.print(parent.data + " ");
+      printMajor(parent.right, obj);
+      System.out.println();
+   }
 
+   // prints node only
+   public void printNode(Node parent)
+   {
+      System.out.print(parent.data);
+      System.out.println();
+   }
    /**
       A node of a tree stores a data item and references
       to the left and right child nodes.

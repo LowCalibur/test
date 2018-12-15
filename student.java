@@ -226,7 +226,10 @@ public class student implements Comparable<student>
                         Scanner scan = new Scanner(System.in);
                         System.out.println("Enter student major");
                         inMajor = scan.next();
-
+                        student = new student();
+                        student.setMajor(inMajor);
+                        tree.printMajor(student);
+                        
                     }
                     else 
                     {

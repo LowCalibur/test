@@ -96,23 +96,6 @@ public class student implements Comparable<student>
         System.out.println();
         return "Id: " + iD + " Name: " + name + " Major: " + major;
     } 
-    public interface MajorCheckVisitor
-    {
-        public void visit (Major major);
-    }
-    public interface MajorCheck
-    {
-        public void accept(MajorCheckVisitor majorCheckVisitor);
-    }
-   
-    public class Major implements MajorCheck
-    {
-        @Override
-        public void accept(MajorCheckVisitor majorCheckVisitor)
-        {
-            majorCheckVisitor.visit(this);
-        }
-    }
     
     public static void main(String[] args)
     {
@@ -201,15 +184,30 @@ public class student implements Comparable<student>
                     {
                         Scanner scan = new Scanner(System.in);
                         System.out.println("Enter student ID");
-                        inID = scan.next();
-                        int check = Integer.parseInt(inID);
-                        if (check < 1)
+                            inID = scan.next();
+                        boolean valid_input = false;
+                        while(!valid_input)
+                        {
+                            System.out.println("Enter student ID");
+                            inID = scan.next();
+                            try
+                            {
+                                int check = Integer.parseInt(inID);
+                                valid_input = true;
+                            }
+                            catch(NumberFormatException e)
+                            {
+                                System.out.println("Input is not an integer");
+                            }
+                        }    
+                        int integer = Integer.parseInt(inID);
+                        if (integer < 1)
                         {
                             System.out.println("Invalid student ID, please enter a number greater than 0.");
                         }
-                        else
+                        else if (integer > 0)
                         {                        
-                            student = new student(check);
+                            student = new student(integer);
                             if (tree.find(student) != null)
                             {
                                 tree.printNode(tree.find(student));
@@ -220,6 +218,10 @@ public class student implements Comparable<student>
                             }
                             search = true;
                         }
+                        else
+                        {
+                            System.out.println("You did not input an integer.");
+                        }                        
                     }
                     else if (input.equals("M"))
                     {

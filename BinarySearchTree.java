@@ -34,17 +34,18 @@ public class BinarySearchTree
       @param obj the object to find
       @return true if the object is contained in the tree
    */
-   public boolean find(Comparable obj)
+   // changed from boolean to Node type
+   public Node find(Comparable obj)
    {
       Node current = root;
       while (current != null)
       {
          int d = current.data.compareTo(obj);
-         if (d == 0) { return true; }
+         if (d == 0) { return current; }
          else if (d > 0) { current = current.left; }
          else { current = current.right; }
       }
-      return false;
+      return current;
    }
    
    /**
@@ -139,7 +140,13 @@ public class BinarySearchTree
       print(root);
       System.out.println();
    }  
-
+   // prints current node only
+   public void printNode(Node parent)
+   {
+      System.out.print(parent.data);
+      System.out.println();
+   }
+   
    /**
       Prints a node and all of its descendants in sorted order.
       @param parent the root of the subtree to print

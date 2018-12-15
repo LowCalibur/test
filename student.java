@@ -71,18 +71,19 @@ public class student implements Comparable<student>
     public int compareTo(student other)
     {
         int result;
-        if (this.name != null && other.name != null)
-        {
-            String current_name = this.getName().toLowerCase();
-            String other_name = other.getName().toLowerCase();
-            result = current_name.compareTo(other_name);
-        }
-        else if (this.iD != 0 && other.iD != 0)
+        if (this.iD != 0 && other.iD != 0)
         {
             String otheriD = Integer.toString(other.iD);
             String currentiD = Integer.toString(this.iD);
             result = currentiD.compareTo(otheriD);
         }
+        else if (this.name != null && other.name != null)
+        {
+            String current_name = this.getName().toLowerCase();
+            String other_name = other.getName().toLowerCase();
+            result = current_name.compareTo(other_name);
+        }
+
         else
         {
             result = this.major.compareTo(other.major);
@@ -94,7 +95,25 @@ public class student implements Comparable<student>
     {
         System.out.println();
         return "Id: " + iD + " Name: " + name + " Major: " + major;
-    }    
+    } 
+    public interface MajorCheckVisitor
+    {
+        public void visit (Major major);
+    }
+    public interface MajorCheck
+    {
+        public void accept(MajorCheckVisitor majorCheckVisitor);
+    }
+   
+    public class Major implements MajorCheck
+    {
+        @Override
+        public void accept(MajorCheckVisitor majorCheckVisitor)
+        {
+            majorCheckVisitor.visit(this);
+        }
+    }
+    
     public static void main(String[] args)
     {
         // Initialize variables and id counters
@@ -121,6 +140,7 @@ public class student implements Comparable<student>
         id_counter++;
         tree.print();
         
+
         Scanner in = new Scanner(System.in);        
         boolean done = false;
         while(!done)
@@ -133,8 +153,9 @@ public class student implements Comparable<student>
             // Terminates program
             if (input.equals("Q"))
             {
+                tree.print();
                 done = true;
-                System.out.println("This program is terminated.");
+                System.out.println("This program is terminated, this is the final tree.");
             }
             // Adds student and increment id counter while printing out tree
             else if (input.equals("A"))
@@ -145,10 +166,17 @@ public class student implements Comparable<student>
                 inName = scan.next();
                 System.out.println("Enter Student's Major: ");
                 inMajor = scan.next();
-                student = new student(id_counter, inName, inMajor);
-                tree.add(student);
-                id_counter++;
-                tree.print();
+                if(inMajor .length() == 3)
+                {
+                    student = new student(id_counter, inName, inMajor);
+                    tree.add(student);
+                    id_counter++;
+                    tree.print();
+                }   
+                else
+                {
+                    System.out.println("Please enter 3 letters for major.");
+                }
             }
             // Removes student entered
             else if (input.equals("R"))
@@ -175,24 +203,33 @@ public class student implements Comparable<student>
                         System.out.println("Enter student ID");
                         inID = scan.next();
                         int check = Integer.parseInt(inID);
-                        student = new student(check);
-                        if (tree.find(student) != false)
+                        if (check < 1)
                         {
-                            tree.print();
+                            System.out.println("Invalid student ID, please enter a number greater than 0.");
                         }
                         else
-                        {
-                            System.out.println("There is no student with that ID");
+                        {                        
+                            student = new student(check);
+                            if (tree.find(student) != null)
+                            {
+                                tree.printNode(tree.find(student));
+                            }
+                            else
+                            {
+                                System.out.println("There is no student with that ID");
+                            }
+                            search = true;
                         }
-                        search = true;
                     }
                     else if (input.equals("M"))
                     {
-                        search = true;
+                        Scanner scan = new Scanner(System.in);
+                        System.out.println("Enter student major");
+                        inMajor = scan.next();
+
                     }
                     else 
                     {
-                        input = "S";
                         System.out.println("Please enter a valid option: I)d or M)ajor");
                     }
                 }   
@@ -203,7 +240,7 @@ public class student implements Comparable<student>
             }
             else
             {
-                System.out.println("Please enter a valid option: A)dd R)emove P)rint Q)uit");
+                System.out.println("Please enter a valid option:");
             }
         }
     }    

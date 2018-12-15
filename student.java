@@ -115,10 +115,10 @@ public class student implements Comparable<student>
         student = new student(id_counter, "Adam", "dpr");
         tree.add(student);
         id_counter++;     
-        student = new student(id_counter, "Eve", "csi");
+        student = new student(id_counter, "Eve", "cis");
         tree.add(student);
         id_counter++;
-        student = new student(id_counter, "Tom", "spa");
+        student = new student(id_counter, "Tom", "cis");
         tree.add(student);
         id_counter++;
         tree.print();

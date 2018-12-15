@@ -143,10 +143,6 @@ public class BinarySearchTree
    //searches for major
    public void printMajor(Comparable obj)
    {
-       if (root.data.compareTo(obj) == 0)
-       {
-           System.out.println(root.data);
-       }
        printMajor(root,obj);
    }
    

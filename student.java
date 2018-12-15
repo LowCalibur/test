@@ -46,16 +46,19 @@ public class student implements Comparable<student>
     {
         return major;
     }    
-    public void setiD(int iD)
+    public void setiD (int iD) throws IllegalArgumentException
     {
-        this.iD = iD;
+        if (iD > 0)
+            this.iD = iD;
+        else
+            throw new IllegalArgumentException("ID must be greater than zero");
     }    
     public void setName(String name)
     {
         this.name = name;
     }
     //Creates major, checks to see if its 3 length
-    public void setMajor(String major)
+    public void setMajor(String major) throws IllegalArgumentException
     {
         if (major.length() == 3)
         {
@@ -64,7 +67,7 @@ public class student implements Comparable<student>
         }
         else
         {
-            System.out.println("Please type in an appropriate 3 letter major");
+            throw new IllegalArgumentException("Please type in an appropriate 3 letter major");
         }
     }
     // compareTo method
@@ -152,7 +155,7 @@ public class student implements Comparable<student>
                 {
                     System.out.println("Enter Student's Major: ");
                     inMajor = scan.next();
-                    if(inMajor .length() == 3)
+                    if(inMajor.length() == 3)
                     {
                         student = new student(id_counter, inName, inMajor);
                         tree.add(student);
@@ -192,11 +195,20 @@ public class student implements Comparable<student>
                         {
                             System.out.println("Enter student ID");
                             inID = scan.next();
-                            // check to see if valid integer
+                            // check to see if an integer
                             try
                             {
                                 int check = Integer.parseInt(inID);
-                                valid_input = true;
+                                // check to see if greater than 0
+                                try
+                                {
+                                    student.setiD(check);
+                                    valid_input = true;
+                                }
+                                catch(IllegalArgumentException e)
+                                {
+                                    System.out.println("Input is not greater than 0.");
+                                }
                             }
                             catch(NumberFormatException e)
                             {
@@ -230,12 +242,24 @@ public class student implements Comparable<student>
                     else if (input.equals("M"))
                     {
                         Scanner scan = new Scanner(System.in);
-                        System.out.println("Enter student's major");
-                        inMajor = scan.next();
-                        student = new student();
-                        student.setMajor(inMajor);
-                        tree.printMajor(student); 
-                        search = true;
+                        while(!valid_input)
+                        {
+                            student = new student();
+                            System.out.println("Enter student's major");
+                            inMajor = scan.next();
+                            try
+                            {
+                                student.setMajor(inMajor);
+                                valid_input = true;
+                            }
+                            catch(IllegalArgumentException e)
+                            {
+                                System.out.println("Please input 3 characters as major.");
+                            }
+                            student.setMajor(inMajor);
+                            tree.printMajor(student); 
+                            search = true;
+                        }
                     }
                     else 
                     {

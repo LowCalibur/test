@@ -157,7 +157,7 @@ public class BinarySearchTree
       System.out.print(parent.data + " ");
       print(parent.right);
    }
-   // searches for major
+   // searches for major and prints any node with major
    private static void printMajor(Node parent, Comparable obj)
    {  
       if (parent == null) { return; }

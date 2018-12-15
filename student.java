@@ -129,6 +129,7 @@ public class student implements Comparable<student>
         while(!done)
         {
             boolean search = false;
+            boolean valid_input = false;
             // Prints out menu
             System.out.println("");
             System.out.println("A)dd R)emove S)earch P)rint Q)uit");
@@ -147,18 +148,22 @@ public class student implements Comparable<student>
                 Scanner scan = new Scanner(System.in);
                 System.out.println("Enter Student's Name: ");
                 inName = scan.next();
-                System.out.println("Enter Student's Major: ");
-                inMajor = scan.next();
-                if(inMajor .length() == 3)
+                while (!valid_input)
                 {
-                    student = new student(id_counter, inName, inMajor);
-                    tree.add(student);
-                    id_counter++;
-                    tree.print();
-                }   
-                else
-                {
-                    System.out.println("Please enter 3 letters for major.");
+                    System.out.println("Enter Student's Major: ");
+                    inMajor = scan.next();
+                    if(inMajor .length() == 3)
+                    {
+                        student = new student(id_counter, inName, inMajor);
+                        tree.add(student);
+                        id_counter++;
+                        tree.print();
+                        valid_input = true;
+                    }   
+                    else
+                    {
+                        System.out.println("Please enter 3 letters for major.");
+                    }
                 }
             }
             // Removes student entered
@@ -183,11 +188,11 @@ public class student implements Comparable<student>
                     if (input.equals("I"))
                     {
                         Scanner scan = new Scanner(System.in);
-                        boolean valid_input = false;
                         while(!valid_input)
                         {
                             System.out.println("Enter student ID");
                             inID = scan.next();
+                            // check to see if valid integer
                             try
                             {
                                 int check = Integer.parseInt(inID);
@@ -221,15 +226,16 @@ public class student implements Comparable<student>
                             System.out.println("You did not input an integer.");
                         }                        
                     }
+                    // Searches for major through input
                     else if (input.equals("M"))
                     {
                         Scanner scan = new Scanner(System.in);
-                        System.out.println("Enter student major");
+                        System.out.println("Enter student's major");
                         inMajor = scan.next();
                         student = new student();
                         student.setMajor(inMajor);
-                        tree.printMajor(student);
-                        
+                        tree.printMajor(student); 
+                        search = true;
                     }
                     else 
                     {

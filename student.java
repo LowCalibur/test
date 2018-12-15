@@ -102,7 +102,7 @@ public class student implements Comparable<student>
         // Initialize variables and id counters
         String inName;
         String inMajor;
-        String inID;
+        String inID = "0";
         int id_counter = 1;
         //Initialize tree and add 5 students
         BinarySearchTree tree = new BinarySearchTree();
@@ -183,8 +183,6 @@ public class student implements Comparable<student>
                     if (input.equals("I"))
                     {
                         Scanner scan = new Scanner(System.in);
-                        System.out.println("Enter student ID");
-                            inID = scan.next();
                         boolean valid_input = false;
                         while(!valid_input)
                         {
